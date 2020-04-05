@@ -1,9 +1,7 @@
 # BitURL
 BitURL is a simple Free URL shortener written in PHP. 
 
-## -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ## HOW TO USE THIS PROGRAM
-## -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 Requirements: This program uses Codeigniter 3.1.11
 
