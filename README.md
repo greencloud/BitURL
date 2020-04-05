@@ -21,13 +21,13 @@ Requirements: This program uses Codeigniter 3.1.11
    simply using the simple, readily to use function in the
    '**setup/API.php**' file. Enjoy!
 
-###### --------
+###### --------------------------------
 
 **Any URL can be formatted by appending it to the API URL:**
-	https://xzample.cc/biturl/api?url=[YOUR_LONG_URL]
+https://xzample.cc/biturl/api?url=[YOUR_LONG_URL]
 
-	Example:
-	https://xzample.cc/biturl/api?url=http://www.example.com/somelongurlquery?foo=bar
+Example Application:
+https://xzample.cc/biturl/api?url=http://www.example.com/somelongurlquery?foo=bar
 
 **The format of the output URL will be something like this:**
-	https://xzample.cc/aBc3Mx
+https://xzample.cc/aBc3Mx
