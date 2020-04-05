@@ -4,9 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $config['base_url']             = 'https://biturl.me/';
 $config['index_page']           = '';
-$config['uri_protocol']			    = 'REQUEST_URI';
-$config['charset']				      = 'UTF-8';
-$config['subclass_prefix'] 		  = 'MY_';
+$config['uri_protocol']         = 'REQUEST_URI';
+$config['charset']              = 'UTF-8';
+$config['subclass_prefix']      = 'MY_';
 $config['permitted_uri_chars']  = 'a-z 0-9~%.:_\-';
 $config['log_threshold']        = 1;
 $config['log_path']             = '';
