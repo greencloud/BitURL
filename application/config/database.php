@@ -9,10 +9,10 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 
-	'hostname' => '[ DATABASE HOST NAME ]',
-	'username' => '[ DATABASE USERNAME ]',
-	'password' => '[ DATABASE PASSWORD ]',
-	'database' => '[ DATABASE NAME ]',
+	'hostname' => '__DATABASE_HOST_NAME__',
+	'username' => '__DATABASE_USERNAME__',
+	'password' => '__DATABASE_PASSWORD__',
+	'database' => '__DATABASE_NAME__',
 
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
