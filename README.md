@@ -5,8 +5,7 @@ BitURL is a simple Free URL shortener written in PHP.
 : HOW TO USE THIS PROGRAM
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-Prerequisite:
-	This program uses Codeigniter 3.1.11
+Requirements: This program uses Codeigniter 3.1.11
 
 1. Download and extract BitURL-Setup-v.1.0.zip
 
@@ -27,7 +26,7 @@ Prerequisite:
 --------
 
 Any long URL can be formatted by appending it to the API URL:
-	https://xzample.cc/biturl/api?url=[YOUR LONG URL]
+	https://xzample.cc/biturl/api?url=[YOUR_LONG_URL]
 
 	Example:
 	https://xzample.cc/biturl/api?url=http://www.example.com/somelongurlquery?foo=bar
