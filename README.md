@@ -18,7 +18,7 @@ BitURL is a Free simple URL shortener application written in PHP.
    directory and rename it to **.htaccess**.
 
 5. This API can be integrated into another web application by
-   simply using the simple, readily to use function in the
+   simply using a simple, ready to use function in the
    '**setup/API.php**' file. Enjoy!
 
 ###### --------------------------------
