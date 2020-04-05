@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$config['base_url']             = 'https://biturl.me/';
+$config['base_url']             = 'https://xzample.cc/';
 $config['index_page']           = '';
 $config['uri_protocol']         = 'REQUEST_URI';
 $config['charset']              = 'UTF-8';
