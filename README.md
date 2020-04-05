@@ -24,10 +24,12 @@ Requirements: This program uses Codeigniter 3.1.11
 ###### --------------------------------
 
 **Any URL can be formatted by appending it to the API URL:**
+
 https://xzample.cc/biturl/api?url=[YOUR_LONG_URL]
 
-Example Application:
-https://xzample.cc/biturl/api?url=http://www.example.com/somelongurlquery?foo=bar
+      Sample API Application:
+      https://xzample.cc/biturl/api?url=http://www.example.com/somelongurlquery?foo=bar
 
 **The format of the output URL will be something like this:**
+
 https://xzample.cc/aBc3Mx
