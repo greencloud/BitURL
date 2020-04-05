@@ -1,5 +1,5 @@
 # BitURL
-BitURL is a simple Free URL shortener written in PHP. 
+BitURL is a Free simple URL shortener application written in PHP.
 
 ## HOW TO USE THIS PROGRAM
 
@@ -15,7 +15,7 @@ Requirements: This program uses Codeigniter 3.1.11
    '**setup/biturl_data.sql**' file in your MySQL database.
 
 4. Copy '**setup/htaccess.txt**' file in your root or public_html
-   directory and rename it to '**.htaccess**'
+   directory and rename it to '**.htaccess**'.
 
 5. This API can be integrated into another web application by
    simply using the simple, readily to use function in the
