@@ -3,7 +3,7 @@ BitURL is a Free simple URL shortener application written in PHP.
 
 ## HOW TO USE THIS PROGRAM
 
-Requirements: This program uses Codeigniter 3.1.11
+**Requirements:** This web application requires Codeigniter 3.1.11
 
 1. Download the files in your desktop: $ git clone https://github.com/greencloud/BitURL.git
 
