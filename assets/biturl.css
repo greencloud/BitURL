@@ -72,12 +72,13 @@ footer div {
   width: 45%;
 }
 
-.copyurl {
+#copyurl {
   cursor: pointer;
   color: #9a9a9a;
-  font-size: 12.5pt;
+  display: inline-block;
+  font-size: 15pt;
 }
 
-.copyurl:hover {
+#copyurl:hover {
   color: #808080;
 }
