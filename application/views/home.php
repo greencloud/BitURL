@@ -34,11 +34,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link href="//fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet" />
     <link href="//cdn-sttc1.srbts.me/img/favicon.ico?i=eb6ba0d5" rel="shortcut icon" type="image/x-icon" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="//fa.srbts.me/fontawesome/css/all.min.css" rel="stylesheet" />
     <link href="<?= base_url();?>assets/biturl.css" rel="stylesheet" />
-
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script src="//fa.srbts.me/fontawesome/js/all.min.js"></script>
 
 </head>
 <body>
@@ -53,7 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <label for="btinput"><?= $this->lang->line('form_label');?>:</label>
             <input type="text" name="btinput" class="form-control btinput" id="btinput" value="" placeholder="<?= $this->lang->line('form_placeholder');?>" required />
             <input type="submit" value="<?= $this->lang->line('form_submit_btn');?>" class="btn btn-primary" />
-            <input type="reset" value="<?= $this->lang->line('form_reset_btn');?>" class="btn btn-dark" />
+            <input type="reset" value="<?= $this->lang->line('form_reset_btn');?>" id="reset" class="btn btn-dark" />
             <span id="loader"></span>
         </div>
         </form>
@@ -61,7 +58,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <hr />
             <p><strong><?= sprintf($this->lang->line('ajax_header'), $this->lang->line('page_title_plain'));?>: &nbsp;</strong>
                 <input id="result" class="result" value="" placeholder="<?= $this->lang->line('ajax_result_default');?>" />&nbsp;
-                <span class="far fa-copy" id="copyurl" title="<?= $this->lang->line('ajax_copy_title');?>"></span></p>
+                <img id="copyurl" src="assets/copy_icon.png" alt="" title="<?= $this->lang->line('ajax_copy_title');?>" />&nbsp;
+                <span class="copied"></span>
+            </p>
         </div>
     </div>
     <div class="footer">
@@ -110,13 +109,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         });
       }
     });
-    
+
     $('#reset').on('click', function(){
       $('#result').attr('value', '');
     });
 
     $('#copyurl').on('click', function(){
-      //...
+      var copyvalue = $('#result').val();
+
+      if ( copyvalue.length > 0 && copyvalue.substring(0, 4) == 'http' ) {
+        $('#result').select();
+        document.execCommand("copy");
+        $('.copied').html('Copied!');
+      } else {
+        return false;
+      }
     });
   });
 </script>
