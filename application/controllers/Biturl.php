@@ -88,7 +88,7 @@ class Biturl extends CI_Controller
 
 	private function isValidUrl( $url_actual )
 	{
-    	$path = parse_url($url_actual, PHP_URL_PATH);
+		$path = parse_url($url_actual, PHP_URL_PATH);
 		$encoded_path = array_map('urlencode', explode('/', $path));
 		$url_actual = str_replace($path, implode('/', $encoded_path), $url_actual);
 
