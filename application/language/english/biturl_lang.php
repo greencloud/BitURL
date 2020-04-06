@@ -26,13 +26,14 @@ $lang['page_title_plain']     = config_item('page_title_plain');
 $lang['page_slogan']          = 'A forever FREE URL link shortener utility';
 
 $lang['form_label']           = 'Your long URL link';
-$lang['form_placeholder']     = 'Enter a full URL link here starting with http...';
+$lang['form_placeholder']     = 'http://www.example.xyz/somevery/long/sample/query?foo=bar';
 $lang['form_submit_btn']      = 'Shorten URL';
 $lang['form_reset_btn']       = 'Reset';
 
 $lang['ajax_header']          = 'Your %s Result'; 
-$lang['ajax_result_default']  = '(Enter target URL above)';
+$lang['ajax_result_default']  = 'Enter target URL above';
 $lang['ajax_copy_title']      = 'Copy URL';
+$lang['ajax_copied']          = 'Copied!';
 $lang['ajax_invalid_url']     = 'The URL you entered is not valid.';
 
 $lang['api_header']           = config_item('page_title') . ' API';
