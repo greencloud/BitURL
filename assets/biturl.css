@@ -1,0 +1,83 @@
+body {
+  color: #454545;
+  background: #fafafa;
+  font-family: Montserrat, Verdana, sans-serif;
+  font-size: 10pt;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin: 0 -2px;
+}
+
+h1 span, h4 span {
+  color: #808080;
+}
+    
+p {
+  line-height: 20px;
+}
+
+form, input[type=text] {
+  background; #fff;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+label {
+  font-size: 10.5pt;
+}
+
+footer div {
+  color: #808080;
+  font-size: smaller;
+  text-align: center;
+}
+
+.wrapper {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 5px 5px;
+  height: auto;
+  margin: 30px auto;
+  padding: 30px 35px;
+  width: 620px;
+}
+
+.header {
+  border-bottom: 1px solid #ddd;
+}
+
+.header p {
+  margin: 8px 0;
+}
+
+.content {
+  margin: 27px 0;
+}
+
+.btinput {
+  display: block;
+  margin-bottom: 15px;
+  margin-top: 3px;
+  width: 100%;
+}
+
+.result {
+  border: 1px dotted #ccc;
+  padding: 3px 6px;
+  border-radius: 3px;
+  width: 45%;
+}
+
+.copyurl {
+  cursor: pointer;
+  color: #9a9a9a;
+  font-size: 12.5pt;
+}
+
+.copyurl:hover {
+  color: #808080;
+}
