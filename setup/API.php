@@ -40,3 +40,5 @@ function bitURL( $url )
 
 $url = 'https://www.example.net/somelongurlquery?foo=bar';
 echo bitURL($url);
+
+// Result will be something like: http://xzample.cc/uWpj82
