@@ -26,9 +26,11 @@ class Home extends CI_Controller
 	{
 		parent::__construct();
 
-		$data['bluff'] = '{"error": 1, "notice": "NULL"}';
+		$this->load->helper('url');
+		
+		$this->lang->load('biturl', 'english');
 
-		$this->load->view('home', $data);	
+		$this->load->view('home');	
 	}
 	
 }
