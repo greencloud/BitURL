@@ -117,10 +117,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     $('#copyurl').on('click', function(){
       var copyvalue = $('#result').val();
 
+      $('.copied').html('').show('fast');
+
       if ( copyvalue.length > 0 && copyvalue.substring(0, 4) == 'http' ) {
         $('#result').select();
         document.execCommand("copy");
-        $('.copied').html('Copied!');
+
+        $('.copied').html('<?= $this->lang->line('ajax_copied');?>');
+
+        setInterval(function(){ $('.copied').fadeOut('slow'); }, 2500);
       } else {
         return false;
       }
