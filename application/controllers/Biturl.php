@@ -89,13 +89,13 @@ class Biturl extends CI_Controller
 	private function isValidUrl( $url_actual )
 	{
     	$path = parse_url($url_actual, PHP_URL_PATH);
-    	$encoded_path = array_map('urlencode', explode('/', $path));
-    	$url_actual = str_replace($path, implode('/', $encoded_path), $url_actual);
+		$encoded_path = array_map('urlencode', explode('/', $path));
+		$url_actual = str_replace($path, implode('/', $encoded_path), $url_actual);
 
-    	if ( substr($url_actual, 0, 4) === 'http' || substr($url_actual, 0, 5) === 'https' )
-    		return filter_var($url_actual, FILTER_VALIDATE_URL) ? TRUE : FALSE;
-    	else
-	    	return FALSE;
+		if ( substr($url_actual, 0, 4) === 'http' || substr($url_actual, 0, 5) === 'https' )
+			return filter_var($url_actual, FILTER_VALIDATE_URL) ? TRUE : FALSE;
+		else
+			return FALSE;
 	}
 
 	private function urlCode( $url_actual )
