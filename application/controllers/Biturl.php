@@ -27,12 +27,13 @@ class Biturl extends CI_Controller
 	public function index()
 	{
 		parent::__construct();
+		
+		$this->load->helper('url');
 	}
 
 	public function api()
 	{
 		$this->load->database();
-
 		$this->load->model('biturl_model');
 
 		if ( isset($_REQUEST['url']) && $this->isValidUrl($_REQUEST['url']) )
@@ -54,8 +55,38 @@ class Biturl extends CI_Controller
 
 		$this->load->view('biturl', $data);
 	}
+	
+	public function input()
+	{
+		$this->lang->load('biturl', 'english');
+		$this->load->database();
+		$input_url = $this->input->post('btinput');
+		
+		if ( $this->isValidUrl($input_url) )
+			$longurl = urlencode(strip_tags(trim($input_url)));
+		else
+			$longurl = FALSE;
+		
+		if ( $longurl )
+		{
+			$urlCode = $this->urlCode($longurl);
+			
+			$this->biturl_model->storeURL($longurl, $urlCode);
+			
+			$output_url = $this->config->item('base_url') . $this->urlCode($longurl);
+			
+			$json = array('error' => '', 'error_msg' => '', 'output_url' => '' . $output_url . '');
+		} else
+		{
+			$json = array('error' => '1', 'error_msg' => '' . $this->lang->line('ajax_invalid_url') .'',
+				'output_url' => '');
+		}
+		
+		header('Content-Type: application/json');
+		echo json_encode($json);
+	}
 
-	public function isValidUrl( $url_actual )
+	private function isValidUrl( $url_actual )
 	{
     	$path = parse_url($url_actual, PHP_URL_PATH);
     	$encoded_path = array_map('urlencode', explode('/', $path));
@@ -67,7 +98,7 @@ class Biturl extends CI_Controller
 	    	return FALSE;
 	}
 
-	public function urlCode( $url_actual )
+	private function urlCode( $url_actual )
 	{
 		if ( $url_actual && strlen($url_actual) > 0 )
 		{
