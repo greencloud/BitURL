@@ -2,7 +2,16 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+$config['meta_title']           = 'BitURL | URL Shortener Utility';
+$config['meta_description']     = '';
+
+$config['page_title']           = 'B<span>i</span>tURL';
+$config['page_title_plain']     = 'BitURL';
+
+// Don't forget the trailing forward slash at the end
+// of the base URL
 $config['base_url']             = 'https://xzample.cc/';
+
 $config['index_page']           = '';
 $config['uri_protocol']         = 'REQUEST_URI';
 $config['charset']              = 'UTF-8';
@@ -20,4 +29,4 @@ $config['cookie_domain']        = '';
 $config['cookie_path']          = '/';
 $config['cookie_secure']        = FALSE;
 $config['cookie_httponly']      = FALSE;
-$config['compress_output']      = TRUE;
+$config['compress_output']      = FALSE;
