@@ -60,10 +60,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div>
             <hr />
             <p><strong><?= sprintf($this->lang->line('ajax_header'), $this->lang->line('page_title_plain'));?>: &nbsp;</strong>
-                <input id="result" class="result" value="" placeholder="<?= $this->lang->line('ajax_result_default');?>" />
-                &nbsp;
-                <span class="far fa-copy copyurl" id="copyurl" title="<?= $this->lang->line('ajax_copy_title');?>"></span>
-                <span class="copymsg"></span></p>
+                <input id="result" class="result" value="" placeholder="<?= $this->lang->line('ajax_result_default');?>" />&nbsp;
+                <span class="far fa-copy" id="copyurl" title="<?= $this->lang->line('ajax_copy_title');?>"></span></p>
         </div>
     </div>
     <div class="footer">
