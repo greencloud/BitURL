@@ -110,6 +110,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         });
       }
     });
+    
+    $('#reset').on('click', function(){
+      $('#result').attr('value', '');
+    });
 
     $('#copyurl').on('click', function(){
       //...
