@@ -91,7 +91,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $.ajax({
           type: 'post',
           url: '<?= base_url();?>biturl/input/',
-          data: $('#biturl').serialize(),
+          data: $(this).serialize(),
           dataType: 'json',
           cache: false,
           beforeSend: function() {
