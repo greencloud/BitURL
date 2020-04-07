@@ -18,20 +18,29 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// NOTE: Refer to the README file to learn how to use this program.
-
+/**
+ * c_URL()
+ *
+ * Use this either as a regular function or as a method in a class file
+ *
+ * @param string $url, The actual URL string to be shortened, should be 
+ *        starting with 'http://' or 'https://' 
+ * @param boolean $trim, Wheather to trim down the 'https://' from the result
+ *
+ * @return string, The shortened URL in this format: https://c-url.me/yjBcsP
+ */
 function c_URL( $url )
 {
     $ci = curl_init();
 
 	$api_url = 'https://c-url.me/curlit/api?url=';
 	$timeout = 5;
-
 	curl_setopt($ci, CURLOPT_URL, $api_url . urlencode($url));
 	curl_setopt($ci, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ci, CURLOPT_CONNECTTIMEOUT, $timeout);
-
 	$data = curl_exec($ci);
+	
+	if ( $trim ) $data = substr($data, 8, 23);
 
 	curl_close($ci);
 
@@ -41,4 +50,10 @@ function c_URL( $url )
 $url = 'https://www.example.net/somelongurlquery?foo=bar';
 echo c_URL($url);
 
-// Result will be something like: https://c-url.me/uWpj82
+
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+$url = 'https://www.example.net/somelongurlquery?foo=bar';
+
+echo c_URL($url); // Returns  https://c-url.me/uWpj82
+echo c_URL($url, true); // Returns  c-url.me/uWpj82
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
