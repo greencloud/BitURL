@@ -1,6 +1,6 @@
 <?php
 /*!
-  BitURL - A simple FREE URL shortener program written in PHP.
+  C-URL - A simple FREE URL shortener utility written in PHP.
 
   Copyright (C) 2020  Rasmus van Guido (greencloud@serbits.com)
 
@@ -34,7 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link href="//fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet" />
     <link href="//cdn-sttc1.srbts.me/img/favicon.ico?i=eb6ba0d5" rel="shortcut icon" type="image/x-icon" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="<?= base_url();?>assets/biturl.css" rel="stylesheet" />
+    <link href="<?= base_url();?>assets/c-url.css" rel="stylesheet" />
     <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
 
 </head>
@@ -45,10 +45,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <p><?= $this->lang->line('page_slogan');?></p>
     </div>
     <div class="content">
-        <form name="biturl" id="biturl" action="<?= base_url();?>biturl/input/" method="post">
+        <form name="c-url" id="c-url" action="<?= base_url();?>curlit/native/" method="post">
         <div class="form-group">
-            <label for="btinput"><?= $this->lang->line('form_label');?>:</label>
-            <input type="text" name="btinput" class="form-control btinput" id="btinput" value="" placeholder="<?= $this->lang->line('form_placeholder');?>" required />
+            <label for="cu-input"><?= $this->lang->line('form_label');?>:</label>
+            <input type="text" name="cu-input" class="form-control cu-input" id="cu-input" value="" placeholder="<?= $this->lang->line('form_placeholder');?>" required />
             <input type="submit" value="<?= $this->lang->line('form_submit_btn');?>" class="btn btn-primary" />
             <input type="reset" value="<?= $this->lang->line('form_reset_btn');?>" id="reset" class="btn btn-dark" />
             <span id="loader"></span>
@@ -64,9 +64,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     <div class="footer">
+        <?php if ( config_item('api_notice') ) { ?>
         <hr />
         <h4><?= $this->lang->line('api_header');?></h4>
         <p><?= $this->lang->line('api_notice');?></p>
+        <?php }?>
         <hr />
         <footer>
             <div>
@@ -77,22 +79,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script>
   $(document).ready(function(){
 
-    $('#biturl').on('submit', function(e){
+    $('#c-url').on('submit', function(e){
       e.preventDefault();
 
-      var inputurl = $('#btinput').val();
+      var inputurl = $('#cu-input').val();
 
       $('#loader').empty();
 
       if ( inputurl.length > 5 ) {
         $.ajax({
           type: 'post',
-          url: '<?= base_url();?>biturl/input/',
+          url: '<?= base_url();?>curlit/native/',
           data: $(this).serialize(),
           dataType: 'json',
           cache: false,
           beforeSend: function() {
-            $('#loader').html('<img src="assets/loader.gif" />');
+            $('#loader').html('<img src="<?= base_url();?>assets/loader.gif" />');
           },
           success: function(json) {
             $('#loader').html('');
