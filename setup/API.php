@@ -40,7 +40,7 @@ function c_URL( $url, $trim = false )
 	curl_setopt($ci, CURLOPT_CONNECTTIMEOUT, $timeout);
 	$data = curl_exec($ci);
 	
-	if ( $trim ) $data = substr($data, 8, 23);
+	if ( $trim ) $data = substr($data, 8, strlen($data));
 
 	curl_close($ci);
 
