@@ -20,11 +20,11 @@
 
 // NOTE: Refer to the README file to learn how to use this program.
 
-function bitURL( $url )
+function c_URL( $url )
 {
     $ci = curl_init();
 
-	$api_url = 'http://xzample.cc/biturl/api?url=';
+	$api_url = 'https://c-url.me/curlit/api?url=';
 	$timeout = 5;
 
 	curl_setopt($ci, CURLOPT_URL, $api_url . urlencode($url));
@@ -39,6 +39,6 @@ function bitURL( $url )
 }
 
 $url = 'https://www.example.net/somelongurlquery?foo=bar';
-echo bitURL($url);
+echo c_URL($url);
 
-// Result will be something like: http://xzample.cc/uWpj82
+// Result will be something like: https://c-url.me/uWpj82
