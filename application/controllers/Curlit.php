@@ -31,6 +31,16 @@ class Curlit extends CI_Controller
 		$this->load->helper('url');
 	}
 
+	/**
+	 * api()
+	 * 
+	 * This method is used by the API main function. All URL string that
+	 * passes it is proccessed and verified here. Once verified it will
+	 * be assigned a hash code and saved in the database.
+	 * 
+	 * @param none
+	 * @return string, The shortened URL string with its hash value
+	 */
 	public function api()
 	{
 		$this->load->database();
@@ -56,7 +66,18 @@ class Curlit extends CI_Controller
 		$this->load->view('curlit', $data);
 	}
 
-	public function native()
+	/**
+	 * native()
+	 * 
+	 * This method is used by the native C-URL web application. This works
+	 * exactly like the api() method except that this one ouputs JSON string
+	 * 
+	 * @param boolean $trim, Whether to trim down 'https://' from the output
+	 *		URL or not.
+	 * @return string, JSON string containing error, error messages, and the
+	 *		shortened URL string
+	 */
+	public function native( $trim = FALSE )
 	{
 		$this->lang->load('curl', 'english');
 
@@ -77,6 +98,8 @@ class Curlit extends CI_Controller
 			$this->curl_model->saveHashedURL($longurl, $urlHash);
 
 			$output_url = $this->config->item('base_url') . $this->urlHash($longurl);
+			
+			if ( $trim ) $output_url = substr($output_url, 8, strlen($output_url));
 
 			$json = array('error' => '', 'error_msg' => '', 'output_url' => '' . $output_url . '');
 		} else
@@ -89,6 +112,14 @@ class Curlit extends CI_Controller
    		echo json_encode($json);
 	}
 
+	/**
+	 * urlValidity()
+	 * 
+	 * This method simply validates whether a URL string is a valid URL or not.
+	 * 
+	 * @param string $url_long, The actual URL that needs shortening
+	 * @return boolean
+	 */
 	private function urlValidity( $url_long )
 	{
 		$path = parse_url($url_long, PHP_URL_PATH);
@@ -101,6 +132,16 @@ class Curlit extends CI_Controller
 			return FALSE;
 	}
 
+	/**
+	 * urlHash()
+	 * 
+	 * This method creates a fixed 6 digit hash from the actual URL string that
+	 * needs to be shortened. This uses the crypt function to avoid collisions
+	 * as mush as possible.
+	 * 
+	 * @param string $url_long, The actual URL that needs shortening
+	 * @return string
+	 */
 	private function urlHash( $url_long )
 	{
 		if ( $url_long && strlen($url_long) > 0 )
