@@ -20,9 +20,9 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Biturl_model extends CI_Model
+class Curl_model extends CI_Model
 {
-	const BU_TABLE = 'biturl_data';	
+	const CU_TABLE = 'curltab_data';
 
 	function __construct()
 	{
@@ -30,41 +30,42 @@ class Biturl_model extends CI_Model
 
 	}
 
-	public function storeURL( $url, $urlCode )
+	public function saveHashedURL( $url, $urlHash )
 	{
-		if ( ! $this->urlCheck($urlCode) )
+		if ( ! $this->urlCheck($urlHash) )
 		{
-			$b_url = $this->config->item('base_url') . $urlCode;
+			$b_url = $this->config->item('base_url') . $urlHash;
 
 			$query = $this->db->query("
-				INSERT INTO " . self::BU_TABLE . "
-					(id, url_id, url_actual, url_short, url_hits, url_added)
+				INSERT INTO " . self::CU_TABLE . "
+					(id, url_id, url_title, url_long, url_short, url_hits, url_date)
 				VALUES
-					(NULL, '" . (string)$urlCode . "', '" . $url . "', '" . $b_url . "', 0, CURRENT_TIMESTAMP)
+					(NULL, '" . (string)$urlHash . "', '', '" . $url . "', '" . $b_url .
+					"', 0, CURRENT_TIMESTAMP)
 			");
 
 			return $query;
 		}
 	}
 
-	public function getURL( $urlCode )
+	public function getLongURL( $urlHash )
 	{
 		$query = $this->db->query("
-			SELECT * FROM " . self::BU_TABLE . " WHERE `url_id` = '" . $urlCode . "'
+			SELECT * FROM " . self::CU_TABLE . " WHERE `url_id` = '" . $urlHash . "'
 		");
 
 		$result = $query->row();
 
 		if ( isset($result) )
-			return $result->url_actual;
+			return $result->url_long;
 		else
 			return FALSE;
 	}
 
-	public function getHits( $urlCode )
+	public function getUrlHits( $urlHash )
 	{
 		$query = $this->db->query("
-			SELECT * FROM " . self::BU_TABLE . " WHERE `url_id` = '" . $urlCode . "'
+			SELECT * FROM " . self::CU_TABLE . " WHERE `url_id` = '" . $urlHash . "'
 		");
 
 		$result = $query->row();
@@ -72,25 +73,26 @@ class Biturl_model extends CI_Model
 		if ( isset($result) )
 			return $result->url_hits;
 		else
-			return FALSE;
+			return 0;
 	}
 
-	public function updateHits( $urlCode )
+	public function setUrlHits( $urlHash )
 	{
-		$hits = $this->getHits($urlCode);
+		$hits = $this->getUrlHits($urlHash);
 		$hits = $hits + 1;
 
 		$query = $this->db->query("
-			UPDATE " . self::BU_TABLE . " SET `url_hits` = '" . (int)$hits . "' WHERE `url_id` = '" . $urlCode . "' LIMIT 1
+			UPDATE " . self::CU_TABLE . " SET `url_hits` = '" . (int)$hits . "'
+			WHERE `url_id` = '" . $urlHash . "' LIMIT 1
 		");
 
 		return $query;
 	}
 
-	public function urlCheck( $urlCode )
+	public function urlCheck( $urlHash )
 	{
 		$query = $this->db->query("
-			SELECT * FROM " . self::BU_TABLE . " WHERE `url_id` = '" . $urlCode . "'
+			SELECT * FROM " . self::CU_TABLE . " WHERE `url_id` = '" . $urlHash . "'
 		");
 
 		return $query->row();
