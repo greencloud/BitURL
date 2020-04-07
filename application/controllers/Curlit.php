@@ -20,90 +20,93 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Biturl extends CI_Controller
+class Curlit extends CI_Controller
 {
 	const INPUT_ERROR = 'Invalid URL input!';
 
 	public function index()
 	{
 		parent::__construct();
-		
+
 		$this->load->helper('url');
 	}
 
 	public function api()
 	{
 		$this->load->database();
-		$this->load->model('biturl_model');
+		$this->load->model('curl_model');
 
-		if ( isset($_REQUEST['url']) && $this->isValidUrl($_REQUEST['url']) )
+		if ( isset($_REQUEST['url']) && $this->urlValidity($_REQUEST['url']) )
 			$longurl = urlencode(strip_tags(trim($_REQUEST['url'])));
 		else
 			$longurl = FALSE;
 
 		if ( $longurl )
 		{
-			$urlCode = $this->urlCode($longurl);
+			$urlHash = $this->urlHash($longurl);
 
-			$this->biturl_model->storeURL($longurl, $urlCode);
+			$this->curl_model->saveHashedURL($longurl, $urlHash);
 
-			$data['output_url'] = $this->config->item('base_url') . $this->urlCode($longurl);
+			$data['output_url'] = $this->config->item('base_url') . $this->urlHash($longurl);
 		} else
 		{
 			$data['output_url'] = self::INPUT_ERROR;
 		}
 
-		$this->load->view('biturl', $data);
+		$this->load->view('curlit', $data);
 	}
-	
-	public function input()
+
+	public function native()
 	{
-		$this->lang->load('biturl', 'english');
-		$this->load->database();
-		$input_url = $this->input->post('btinput');
-		
-		if ( $this->isValidUrl($input_url) )
+    	$this->lang->load('curl', 'english');
+
+    	$this->load->database();
+		$this->load->model('curl_model');
+
+		$input_url = $this->input->post('cu-input');
+
+		if ( $this->urlValidity($input_url) )
 			$longurl = urlencode(strip_tags(trim($input_url)));
 		else
 			$longurl = FALSE;
-		
+
 		if ( $longurl )
 		{
-			$urlCode = $this->urlCode($longurl);
-			
-			$this->biturl_model->storeURL($longurl, $urlCode);
-			
-			$output_url = $this->config->item('base_url') . $this->urlCode($longurl);
-			
+			$urlHash = $this->urlHash($longurl);
+
+			$this->curl_model->saveHashedURL($longurl, $urlHash);
+
+			$output_url = $this->config->item('base_url') . $this->urlHash($longurl);
+
 			$json = array('error' => '', 'error_msg' => '', 'output_url' => '' . $output_url . '');
 		} else
 		{
 			$json = array('error' => '1', 'error_msg' => '' . $this->lang->line('ajax_invalid_url') .'',
 				'output_url' => '');
 		}
-		
+
 		header('Content-Type: application/json');
-		echo json_encode($json);
+   		echo json_encode($json);
 	}
 
-	private function isValidUrl( $url_actual )
+	private function urlValidity( $url_long )
 	{
-		$path = parse_url($url_actual, PHP_URL_PATH);
-		$encoded_path = array_map('urlencode', explode('/', $path));
-		$url_actual = str_replace($path, implode('/', $encoded_path), $url_actual);
+    	$path = parse_url($url_long, PHP_URL_PATH);
+    	$encoded_path = array_map('urlencode', explode('/', $path));
+    	$url_long = str_replace($path, implode('/', $encoded_path), $url_long);
 
-		if ( substr($url_actual, 0, 4) === 'http' || substr($url_actual, 0, 5) === 'https' )
-			return filter_var($url_actual, FILTER_VALIDATE_URL) ? TRUE : FALSE;
-		else
-			return FALSE;
+    	if ( substr($url_long, 0, 4) === 'http' || substr($url_long, 0, 5) === 'https' )
+    		return filter_var($url_long, FILTER_VALIDATE_URL) ? TRUE : FALSE;
+    	else
+	    	return FALSE;
 	}
 
-	private function urlCode( $url_actual )
+	private function urlHash( $url_long )
 	{
-		if ( $url_actual && strlen($url_actual) > 0 )
+		if ( $url_long && strlen($url_long) > 0 )
 		{
 			$salt = '$1$vintarah$';
-			$str_code = crypt(sha1($url_actual), $salt);
+			$str_code = crypt(sha1($url_long), $salt);
 			$str_code = strrev( $str_code );
 
 			if ( preg_match('/[^\p{L}\p{N}\s]/u', $str_code) )
