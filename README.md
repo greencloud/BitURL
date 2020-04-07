@@ -1,5 +1,5 @@
 # C-URL
-C-URL is a Free simple URL shortener application written in PHP.
+C-URL is a simple, forever Free open source, URL shortener web application written in PHP.
 
 ## HOW TO USE THIS PROGRAM
 
@@ -12,7 +12,7 @@ C-URL is a Free simple URL shortener application written in PHP.
    folder.
 
 3. Setup your database connection properly and install the
-   '**setup/biturl_data.sql**' file in your MySQL database.
+   '**setup/curltab_data.sql**' file in your MySQL database.
 
 4. Copy '**setup/htaccess.txt**' file in your root or public_html
    directory and rename it to **.htaccess**.
@@ -25,11 +25,11 @@ C-URL is a Free simple URL shortener application written in PHP.
 
 **Any URL can be formatted by appending it to the API URL:**
 
-https://xzample.cc/biturl/api?url=[SOME_LONG_URL_THAT_REQUIRES_SHORTENING]
+https://c-url.me/curlit/api?url=[SOME_LONG_URL_THAT_REQUIRES_SHORTENING]
 
       Sample API Application:
-      https://xzample.cc/biturl/api?url=http://www.example.com/somelongurlquery?foo=bar
+      https://c-url.me/curlit/api?url=http://www.example.com/somelongurlquery?foo=bar
 
 **The format of the output URL will be something like this:**
 
-https://xzample.cc/aBc3Mx
+https://c-url.me/aBc3Mx
