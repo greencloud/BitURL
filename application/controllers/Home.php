@@ -28,7 +28,7 @@ class Home extends CI_Controller
 
 		$this->load->helper('url');
 		
-		$this->lang->load('biturl', 'english');
+		$this->lang->load('curl', 'english');
 
 		$this->load->view('home');	
 	}
