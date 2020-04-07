@@ -29,7 +29,7 @@
  *
  * @return string, The shortened URL in this format: https://c-url.me/yjBcsP
  */
-function c_URL( $url )
+function c_URL( $url, $trim = false )
 {
     $ci = curl_init();
 
