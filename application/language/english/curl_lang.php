@@ -1,6 +1,6 @@
 <?php
 /*!
-  BitURL - A simple FREE URL shortener program written in PHP.
+  C-URL - A simple FREE URL shortener utility written in PHP.
 
   Copyright (C) 2020  Rasmus van Guido (greencloud@serbits.com)
 
