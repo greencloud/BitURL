@@ -58,7 +58,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <hr />
             <p><strong><?= sprintf($this->lang->line('ajax_header'), $this->lang->line('page_title_plain'));?>: &nbsp;</strong>
                 <input id="result" class="result" value="" placeholder="<?= $this->lang->line('ajax_result_default');?>" />&nbsp;
-                <img id="copyurl" src="assets/copy_icon.png" alt="" title="<?= $this->lang->line('ajax_copy_title');?>" />&nbsp;
+                <img id="copyurl" src="<?= base_url();?>assets/copy_icon.png" alt="" title="<?= $this->lang->line('ajax_copy_title');?>" />&nbsp;
                 <span class="copied"></span>
             </p>
         </div>
