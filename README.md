@@ -1,11 +1,11 @@
 # C-URL
 C-URL is a simple, forever Free open source, URL shortener web application written in PHP.
 
-## HOW TO USE THIS PROGRAM
+## HOW TO USE THIS WEB APPLICATION
 
 **Requirements:** This web application requires Codeigniter 3.1.11
 
-1. Download the files in your desktop: $ git clone https://github.com/greencloud/C-URL.git
+1. Download the files in to your desktop: $ git clone https://github.com/greencloud/C-URL.git
 
 2. Copy all the essential files in the **application** folder
    to their designated folders in your Codeigniter application
@@ -23,13 +23,13 @@ C-URL is a simple, forever Free open source, URL shortener web application writt
 
 ###### --------------------------------
 
-**Any URL can be formatted by appending it to the API URL:**
+**Any URL can be shortened by appending it to the API URL:**
 
 https://c-url.me/curlit/api?url=[SOME_LONG_URL_THAT_REQUIRES_SHORTENING]
 
       Sample API Application:
       https://c-url.me/curlit/api?url=http://www.example.com/somelongurlquery?foo=bar
 
-**The format of the output URL will be something like this:**
+**C-URL will output a shortened URL similar to this (only 23 characters long):**
 
 https://c-url.me/aBc3Mx
