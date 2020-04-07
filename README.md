@@ -1,7 +1,7 @@
 # C-URL
 C-URL is a simple, forever Free open source, URL shortener web application written in PHP.
 
-## HOW TO USE THIS WEB APPLICATION
+## HOW TO SETUP C-URL?
 
 **Prerequisite:** This web application requires Codeigniter 3.1.11
 
