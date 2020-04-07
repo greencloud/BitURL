@@ -20,27 +20,27 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Output extends CI_Controller
+class Cout extends CI_Controller
 {
 	public function index()
 	{
 		parent::__construct();
 	}
 
-	public function url( $urlCode )
+	public function url( $urlHash )
 	{
 		$this->load->database();
 
-		$this->load->model('biturl_model');
+		$this->load->model('curl_model');
 
-		if ( $urlCode && strlen($urlCode) == 6 )
+		if ( $urlHash && strlen($urlHash) == 6 )
 		{
-			if ( $this->biturl_model->urlCheck($urlCode) )
+			if ( $this->curl_model->urlCheck($urlHash) )
 			{
 				$data['output'] = TRUE; 
-				$data['output_url'] = $this->biturl_model->getURL($urlCode);
+				$data['output_url'] = $this->curl_model->getLongURL($urlHash);
 
-				$this->biturl_model->updateHits($urlCode);
+				$this->curl_model->setUrlHits($urlHash);
 			} else
 			{
 				$data['output'] = FALSE;
@@ -50,7 +50,7 @@ class Output extends CI_Controller
 			$data['output'] = FALSE;
 		}
 
-		$this->load->view('output', $data);	
+		$this->load->view('cout', $data);	
 	}
 
 }
