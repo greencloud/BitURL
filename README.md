@@ -1,11 +1,11 @@
-# BitURL
-BitURL is a Free simple URL shortener application written in PHP.
+# C-URL
+C-URL is a Free simple URL shortener application written in PHP.
 
 ## HOW TO USE THIS PROGRAM
 
 **Requirements:** This web application requires Codeigniter 3.1.11
 
-1. Download the files in your desktop: $ git clone https://github.com/greencloud/BitURL.git
+1. Download the files in your desktop: $ git clone https://github.com/greencloud/C-URL.git
 
 2. Copy all the essential files in the **application** folder
    to their designated folders in your Codeigniter application
