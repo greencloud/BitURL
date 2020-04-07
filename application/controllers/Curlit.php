@@ -58,9 +58,9 @@ class Curlit extends CI_Controller
 
 	public function native()
 	{
-    	$this->lang->load('curl', 'english');
+		$this->lang->load('curl', 'english');
 
-    	$this->load->database();
+		$this->load->database();
 		$this->load->model('curl_model');
 
 		$input_url = $this->input->post('cu-input');
@@ -91,14 +91,14 @@ class Curlit extends CI_Controller
 
 	private function urlValidity( $url_long )
 	{
-    	$path = parse_url($url_long, PHP_URL_PATH);
-    	$encoded_path = array_map('urlencode', explode('/', $path));
-    	$url_long = str_replace($path, implode('/', $encoded_path), $url_long);
+		$path = parse_url($url_long, PHP_URL_PATH);
+		$encoded_path = array_map('urlencode', explode('/', $path));
+		$url_long = str_replace($path, implode('/', $encoded_path), $url_long);
 
-    	if ( substr($url_long, 0, 4) === 'http' || substr($url_long, 0, 5) === 'https' )
-    		return filter_var($url_long, FILTER_VALIDATE_URL) ? TRUE : FALSE;
-    	else
-	    	return FALSE;
+		if ( substr($url_long, 0, 4) === 'http' || substr($url_long, 0, 5) === 'https' )
+			return filter_var($url_long, FILTER_VALIDATE_URL) ? TRUE : FALSE;
+		else
+			return FALSE;
 	}
 
 	private function urlHash( $url_long )
