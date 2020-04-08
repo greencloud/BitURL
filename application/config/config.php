@@ -20,15 +20,18 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$config['meta_title']           = 'C-URL | URL Shortener Utility';
+$config['meta_title']           = 'cURLit | URL Shortener Utility';
 $config['meta_description']     = '';
 
-$config['page_title']           = 'C<span>-</span>URL';
-$config['page_title_plain']     = 'C-URL';
+$config['page_title']           = 'cURL<span>it</span>';
+$config['page_title_plain']     = 'cURLit';
 
 // Don't forget the trailing forward slash at the end
 // of the base URL
-$config['base_url']             = 'https://c-url.me/';
+$config['base_url']             = 'https://domain.xyz/';
+$config['base_url_trimmed']     = '//domain.xyz/';
+$config['curl_url']             = 'https://dmn.xyz/';
+$config['curl_url_trimmed']     = '//dmn.xyz/';
 
 $config['api_notice']           = FALSE;
 $config['index_page']           = '';
