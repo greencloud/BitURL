@@ -24,11 +24,15 @@ class Curlit extends CI_Controller
 {
 	const INPUT_ERROR = 'Invalid URL input!';
 
-	public function index()
+	public function __construct()
 	{
 		parent::__construct();
 
+		$this->lang->load('curl', 'english');
+
+		$this->load->database();
 		$this->load->helper('url');
+		$this->load->model('curl_model');
 	}
 
 	/**
@@ -43,21 +47,28 @@ class Curlit extends CI_Controller
 	 */
 	public function api()
 	{
-		$this->load->database();
-		$this->load->model('curl_model');
+		$longurl = '';
+		$title = $this->lang->line('ajax_untitled');
 
+		// The actual URL to be processed
 		if ( isset($_REQUEST['url']) && $this->urlValidity($_REQUEST['url']) )
-			$longurl = urlencode(strip_tags(trim($_REQUEST['url'])));
-		else
-			$longurl = FALSE;
+		{
+			$longurl = $this->trimLast($_REQUEST['url']);
+			$longurl = urlencode(strip_tags(trim($longurl)));
+		}
 
+		// The title of the URL, if set
+		if ( isset($_REQUEST['title']) && strlen($_REQUEST['title']) > 0 )
+			$title = $this->urlTitle(urldecode(trim($_REQUEST['title'])));
+		
 		if ( $longurl )
 		{
 			$urlHash = $this->urlHash($longurl);
 
-			$this->curl_model->saveHashedURL($longurl, $urlHash);
-
-			$data['output_url'] = $this->config->item('base_url') . $this->urlHash($longurl);
+			if ( $this->curl_model->saveHashedURL($longurl, $title, $urlHash) )		
+				$data['output_url'] = $this->config->item('curl_url') . $this->urlHash($longurl);
+			else
+				$data['output_url'] = $this->lang->line('ajax_unsaved_url');
 		} else
 		{
 			$data['output_url'] = self::INPUT_ERROR;
@@ -79,37 +90,81 @@ class Curlit extends CI_Controller
 	 */
 	public function native( $trim = FALSE )
 	{
-		$this->lang->load('curl', 'english');
-
-		$this->load->database();
-		$this->load->model('curl_model');
-
-		$input_url = $this->input->post('cu-input');
+		$longurl	= '';
+		$input_url	= $this->input->post('cu-input');
+		$title		= $this->lang->line('ajax_untitled');
 
 		if ( $this->urlValidity($input_url) )
-			$longurl = urlencode(strip_tags(trim($input_url)));
-		else
-			$longurl = FALSE;
+		{
+			$longurl = $this->trimLast($input_url);
+			$longurl = urlencode(strip_tags(trim($longurl)));
+		}
 
 		if ( $longurl )
 		{
 			$urlHash = $this->urlHash($longurl);
 
-			$this->curl_model->saveHashedURL($longurl, $urlHash);
+			if ( $this->curl_model->saveHashedURL($longurl, $title, $urlHash) )
+			{
+				$output_url = $this->config->item('curl_url') . $this->urlHash($longurl);
 
-			$output_url = $this->config->item('base_url') . $this->urlHash($longurl);
-			
-			if ( $trim ) $output_url = substr($output_url, 8, strlen($output_url));
-
-			$json = array('error' => '', 'error_msg' => '', 'output_url' => '' . $output_url . '');
+				$json = array(
+					'error' => '',
+					'error_msg' => '',
+					'output_url' => '' . $output_url . ''
+				);
+			} else
+			{
+				$json = array(
+					'error' => '1',
+					'error_msg' => '' . $this->lang->line('ajax_unsaved_url') . '',
+					'output_url' => ''
+				);
+			}
 		} else
 		{
-			$json = array('error' => '1', 'error_msg' => '' . $this->lang->line('ajax_invalid_url') .'',
-				'output_url' => '');
+			$json = array(
+				'error' => '1',
+				'error_msg' => '' . $this->lang->line('ajax_invalid_url') .'',
+				'output_url' => ''
+			);
 		}
 
 		header('Content-Type: application/json');
    		echo json_encode($json);
+	}
+
+	/**
+	 * trimLast()
+	 * 
+	 * Remove the trailing forwardslash at the end of the subject URL.
+	 * 
+	 * @param string $url_long, The actual URL that needs shortening
+	 * @return string, The actual URL that needs shortening without the
+	 *		trailing forwardslash at the end
+	 */
+	private function trimLast( $url_long )
+	{
+		if ( substr($url_long, -1, strlen($url_long)) == '/' )
+			return substr($url_long, 0, strlen($url_long)-1);
+		else
+			return $url_long;
+	}
+
+	/**
+	 * urlTitle()
+	 * 
+	 * This is optional. The title to be assigned to the shortened URL.
+	 * 
+	 * @param string $title, The title of the shortened URL
+	 * @return string, The title of the shortened URL
+	 */
+	private function urlTitle( $title )
+	{
+		if ( $title )
+			return  urldecode(trim($title));
+		else
+			return $this->lang->line('ajax_untitled');
 	}
 
 	/**
