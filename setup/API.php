@@ -24,16 +24,20 @@
  * Use this either as a regular function or as a method in a class file
  *
  * @param string $url, The actual URL string to be shortened, should be 
- *        starting with 'http://' or 'https://' 
+ *        starting with 'http://' or 'https://'
+ * @param string $title, The title of the shortened URL for future use
  * @param boolean $trim, Wheather to trim down the 'https://' from the result
  *
  * @return string, The shortened URL in this format: https://c-url.me/yjBcsP
  */
-function c_URL( $url, $trim = false )
+function c_URL( $url, $title = '', $trim = false )
 {
 	$cu = curl_init();
 
-	$api_url = 'https://c-url.me/curlit/api?url=';
+	$api_url = 'https://c-url.me/curlit/api?url=' . urlencode($url);
+
+	if ( $title ) $api_url .= '&title=' . urlencode($title);
+
 	$timeout = 5;
 	curl_setopt($cu, CURLOPT_URL, $api_url . urlencode($url));
 	curl_setopt($cu, CURLOPT_RETURNTRANSFER, 1);
@@ -41,19 +45,24 @@ function c_URL( $url, $trim = false )
 	$data = curl_exec($cu);
 	
 	if ( $trim ) $data = substr($data, 8, strlen($data));
+	if ( strpos($data, 'error') ) $data = 'cURLitError';
 
 	curl_close($cu);
 
 	return $data;
 }
 
+
+$title = 'My C-URL Link';
 $url = 'https://www.example.net/somelongurlquery?foo=bar';
-echo c_URL($url);
+
+echo c_URL($url); // Just the URL
+echo c_URL($url, $title); // With added title for future use
 
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 $url = 'https://www.example.net/somelongurlquery?foo=bar';
 
 echo c_URL($url); // Returns  https://c-url.me/uWpj82
-echo c_URL($url, true); // Returns  c-url.me/uWpj82
+echo c_URL($url, '', true); // Returns  c-url.me/uWpj82
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
