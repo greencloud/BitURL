@@ -35,6 +35,8 @@ $lang['ajax_result_default']  = 'Enter target URL above';
 $lang['ajax_copy_title']      = 'Copy URL';
 $lang['ajax_copied']          = 'Copied!';
 $lang['ajax_invalid_url']     = 'The URL you entered is not valid.';
+$lang['ajax_unsaved_url']     = 'URL not saved, try again later.';
+$lang['ajax_untitled']        = 'Untitled';
 
 $lang['api_header']           = config_item('page_title') . ' API';
 $lang['api_notice']           = 'You can host ' . config_item('page_title') . ' on your own server or integrate it on your website for FREE. For more information, check out <a target="_blank" href="https://github.com/greencloud/' . config_item('page_title_plain') . '">' . config_item('page_title') . ' on Github</a>.';
