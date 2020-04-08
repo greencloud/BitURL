@@ -30,24 +30,73 @@ class Curl_model extends CI_Model
 
 	}
 
-	public function saveHashedURL( $url, $urlHash )
+	/**
+	 * saveHashedURL()
+	 * 
+	 * Save the hash coded shortened URL in the database along with other info
+	 * 
+	 * @param string $url, The actual long URL
+	 * @param string $title, The new title for the existing shortened URL
+	 * @param string $urlHash, The 6-digit hash code of the actual URL
+	 * @return boolean
+	 */
+	public function saveHashedURL( $url, $title, $urlHash )
 	{
-		if ( ! $this->urlCheck($urlHash) )
+		if ( $this->urlLongCheck($url) )
 		{
-			$b_url = $this->config->item('base_url') . $urlHash;
+			if ( $this->updateTitle($url, $title) )
+				return TRUE;
+			else
+				return FALSE;
+		} else
+		{
+			if ( ! $this->urlIdCheck($urlHash) )
+			{
+				$data = array(
+					'id'		=> NULL,
+					'url_id'	=> (string)$urlHash,
+					'url_title'	=> $title,
+					'url_long'	=> $url,
+					'url_short'	=> $this->config->item('base_url') . $urlHash,
+					'url_hits'	=> 0,
+					'url_date'	=> date("Y-m-d H:i:s")
+				);
 
-			$query = $this->db->query("
-				INSERT INTO " . self::CU_TABLE . "
-					(id, url_id, url_title, url_long, url_short, url_hits, url_date)
-				VALUES
-					(NULL, '" . (string)$urlHash . "', '', '" . $url . "', '" . $b_url .
-					"', 0, CURRENT_TIMESTAMP)
-			");
-
-			return $query;
+				if ( $this->db->insert(self::CU_TABLE, $data) )
+					return TRUE;
+				else
+					return FALSE;
+			}
 		}
 	}
 
+	/**
+	 * updateTitle()
+	 * 
+	 * Update the title of the already existing shortened URL
+	 * 
+	 * @param string $url, The actual long URL
+	 * @param string $title, The new title for the existing shortened URL
+	 * @return boolean
+	 */
+	public function updateTitle( $url, $title )
+	{
+		$data = array('url_title' => $title);
+
+		$where = "`url_long` = '" . $url . "'";
+
+		return $this->db->update(self::CU_TABLE, $data, $where);
+	}
+
+	/**
+	 * getLongURL()
+	 * 
+	 * Retrieve the original URL from the database to be used to redirect
+	 * the hash coded URL to the actual long URL
+	 * 
+	 * @param string $urlHash, The 6-digit hash code of the actual URL
+	 * @return string, The shortened URL string with its hash value
+	 */
 	public function getLongURL( $urlHash )
 	{
 		$query = $this->db->query("
@@ -62,6 +111,14 @@ class Curl_model extends CI_Model
 			return FALSE;
 	}
 
+	/**
+	 * getUrlHits()
+	 * 
+	 * Get the number of hits accumulated for a shortened URL
+	 * 
+	 * @param string $urlHash, The 6-digit hash code of the actual URL
+	 * @return int, The number of hits acquired by a shortened URL
+	 */
 	public function getUrlHits( $urlHash )
 	{
 		$query = $this->db->query("
@@ -76,6 +133,14 @@ class Curl_model extends CI_Model
 			return 0;
 	}
 
+	/**
+	 * setUrlHits()
+	 * 
+	 * Update the acquired number of hits by a shortened URL
+	 * 
+	 * @param string $urlHash, The 6-digit hash code of the actual URL
+	 * @return boolean
+	 */
 	public function setUrlHits( $urlHash )
 	{
 		$hits = $this->getUrlHits($urlHash);
@@ -89,10 +154,35 @@ class Curl_model extends CI_Model
 		return $query;
 	}
 
-	public function urlCheck( $urlHash )
+	/**
+	 * setUrlHits()
+	 * 
+	 * Update the acquired number of hits by a shortened URL
+	 * 
+	 * @param string $urlHash, The 6-digit hash code of the actual URL
+	 * @return boolean
+	 */
+	public function urlIdCheck( $urlHash )
 	{
 		$query = $this->db->query("
 			SELECT * FROM " . self::CU_TABLE . " WHERE `url_id` = '" . $urlHash . "'
+		");
+
+		return $query->row();
+	}
+
+	/**
+	 * urlLongCheck()
+	 * 
+	 * Check to see if the long URL exists in the database
+	 * 
+	 * @param string $url, The actual long URL
+	 * @return boolean
+	 */
+	public function urlLongCheck( $url )
+	{
+		$query = $this->db->query("
+			SELECT * FROM " . self::CU_TABLE . " WHERE `url_long` = '" . $url . "'
 		");
 
 		return $query->row();
