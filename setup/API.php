@@ -31,18 +31,18 @@
  */
 function c_URL( $url, $trim = false )
 {
-    $ci = curl_init();
+	$cu = curl_init();
 
 	$api_url = 'https://c-url.me/curlit/api?url=';
 	$timeout = 5;
-	curl_setopt($ci, CURLOPT_URL, $api_url . urlencode($url));
-	curl_setopt($ci, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt($ci, CURLOPT_CONNECTTIMEOUT, $timeout);
-	$data = curl_exec($ci);
+	curl_setopt($cu, CURLOPT_URL, $api_url . urlencode($url));
+	curl_setopt($cu, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($cu, CURLOPT_CONNECTTIMEOUT, $timeout);
+	$data = curl_exec($cu);
 	
 	if ( $trim ) $data = substr($data, 8, strlen($data));
 
-	curl_close($ci);
+	curl_close($cu);
 
 	return $data;
 }
