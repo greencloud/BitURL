@@ -20,13 +20,13 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-if ( $output )
+if ( $orig_url )
 {
 	header("HTTP/1.1 301 Moved Permanently");
-	header("Location: " . urldecode($output_url));
+	header("Location: " . urldecode($orig_url));
 } else
 {
-	header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
+	header("Location: " . config_item('base_url'));
 }
 
 exit();
