@@ -39,7 +39,7 @@ function c_URL( $url, $title = '', $trim = false )
 	if ( $title ) $api_url .= '&title=' . urlencode($title);
 
 	$timeout = 5;
-	curl_setopt($cu, CURLOPT_URL, $api_url . urlencode($url));
+	curl_setopt($cu, CURLOPT_URL, $api_url);
 	curl_setopt($cu, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($cu, CURLOPT_CONNECTTIMEOUT, $timeout);
 	$data = curl_exec($cu);
