@@ -22,32 +22,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cout extends CI_Controller
 {
-	public function index()
+	public function __construct()
 	{
 		parent::__construct();
+
+		$this->load->database();
+		$this->load->model('curl_model');
 	}
 
+	/**
+	 * url()
+	 * 
+	 * Retrieve the original long URL from the database to be used to
+	 * redirect the shortened URL
+	 * 
+	 * @param string $urlHash, The 6-digit hash code of the actual URL
+	 * @return string, The actual long URL
+	 */
 	public function url( $urlHash )
 	{
-		$this->load->database();
-
-		$this->load->model('curl_model');
-
 		if ( $urlHash && strlen($urlHash) == 6 )
 		{
-			if ( $this->curl_model->urlCheck($urlHash) )
+			if ( $this->curl_model->urlIdCheck($urlHash) )
 			{
-				$data['output'] = TRUE; 
-				$data['output_url'] = $this->curl_model->getLongURL($urlHash);
-
 				$this->curl_model->setUrlHits($urlHash);
+				$data['orig_url'] = $this->curl_model->getLongURL($urlHash);
+	
 			} else
 			{
-				$data['output'] = FALSE;
+				$data['orig_url'] = FALSE;
 			}
 		} else
 		{
-			$data['output'] = FALSE;
+			$data['orig_url'] = FALSE;
 		}
 
 		$this->load->view('cout', $data);	
