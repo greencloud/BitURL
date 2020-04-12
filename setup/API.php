@@ -16,24 +16,72 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  
+  @param string $url, The actual URL string to be shortened, should be         
+  		starting with 'http://' or 'https://'
+  @param string $title, The title of the shortened URL for future use
+  @param boolean $trim, Wheather to trim down the 'https://' from the result
+  @return string, The shortened URL in this format: https://c-url.me/yjBcsP
 */
 
-/**
- * c_URL()
- *
- * Use this either as a regular function or as a method in a class file
- *
- * @param string $url, The actual URL string to be shortened, should be 
- *        starting with 'http://' or 'https://'
- * @param string $title, The title of the shortened URL for future use
- * @param boolean $trim, Wheather to trim down the 'https://' from the result
- *
- * @return string, The shortened URL in this format: https://c-url.me/yjBcsP
- */
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+// TO USE THIS CURLIT AS A METHOD IN A CLASS
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+class MyClassName
+{
+	public function __construct()
+	{
+		parent::__construct();
+	}
+	
+	public function c_URL( $url, $title = '', $trim = false )
+	{
+		$cu = curl_init();
+
+		// Always encode URLs queries, otherwise this function
+		// will return an 'Invalid URL Input' message
+		$api_url = 'https://c-url.me/curlit/api?url=' . urlencode($url);
+
+		if ( $title ) $api_url .= '&title=' . urlencode($title);
+
+		$timeout = 5;
+		curl_setopt($cu, CURLOPT_URL, $api_url);
+		curl_setopt($cu, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($cu, CURLOPT_CONNECTTIMEOUT, $timeout);
+		$data = curl_exec($cu);
+
+		if ( $trim ) $data = substr($data, 8, strlen($data));
+		if ( strpos($data, 'error') ) $data = 'cURLitError';
+
+		curl_close($cu);
+
+		return $data;
+	}
+}
+
+// TO USE:
+
+$myclass = new MyClassName();
+
+$title = 'My C-URL Link';
+$url = 'https://www.example.net/somelongurlquery?foo=bar';
+
+echo $myclass->c_URL($url);				// Plain URL -> https://c-url.me/uWpj82
+echo $myclass->c_URL($url, $title);		// With added title for future use
+echo $myclass->c_URL($url, '', true);	// Returns -> c-url.me/uWpj82
+
+
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+// TO USE THIS CURLIT AS A REGULAR FUNCTION
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
 function c_URL( $url, $title = '', $trim = false )
 {
 	$cu = curl_init();
 
+	// Always encode URLs queries, otherwise this function
+	// will return an 'Invalid URL Input' message
 	$api_url = 'https://c-url.me/curlit/api?url=' . urlencode($url);
 
 	if ( $title ) $api_url .= '&title=' . urlencode($title);
@@ -52,6 +100,7 @@ function c_URL( $url, $title = '', $trim = false )
 	return $data;
 }
 
+// TO USE:
 
 $title = 'My C-URL Link';
 $url = 'https://www.example.net/somelongurlquery?foo=bar';
