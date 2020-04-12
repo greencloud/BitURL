@@ -67,9 +67,9 @@ $myclass = new MyClassName();
 $title = 'My C-URL Link';
 $url = 'https://www.example.net/somelongurlquery?foo=bar';
 
-echo $myclass->c_URL($url);				// Plain URL -> https://c-url.me/uWpj82
-echo $myclass->c_URL($url, $title);		// With added title for future use
-echo $myclass->c_URL($url, '', true);	// Returns -> c-url.me/uWpj82
+echo $myclass->c_URL($url);             // Plain URL -> https://c-url.me/uWpj82
+echo $myclass->c_URL($url, $title);     // With added title for future use
+echo $myclass->c_URL($url, '', true);   // Returns -> c-url.me/uWpj82
 
 
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -105,6 +105,6 @@ function c_URL( $url, $title = '', $trim = false )
 $title = 'My C-URL Link';
 $url = 'https://www.example.net/somelongurlquery?foo=bar';
 
-echo c_URL($url);			// Plain URL -> https://c-url.me/uWpj82
-echo c_URL($url, $title);	// With added title for future use
-echo c_URL($url, '', true);	// Returns -> c-url.me/uWpj82
+echo c_URL($url);           // Plain URL -> https://c-url.me/uWpj82
+echo c_URL($url, $title);   // With added title for future use
+echo c_URL($url, '', true); // Returns -> c-url.me/uWpj82
