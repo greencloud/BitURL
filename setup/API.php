@@ -51,7 +51,7 @@ class MyClassName
 		curl_setopt($cu, CURLOPT_CONNECTTIMEOUT, $timeout);
 		$data = curl_exec($cu);
 
-		if ( $trim ) $data = substr($data, 8, strlen($data));
+		if ( $trim ) $data = substr($data, 7, strlen($data));
 		if ( strpos($data, 'error') ) $data = 'cURLitError';
 
 		curl_close($cu);
@@ -92,7 +92,7 @@ function c_URL( $url, $title = '', $trim = false )
 	curl_setopt($cu, CURLOPT_CONNECTTIMEOUT, $timeout);
 	$data = curl_exec($cu);
 	
-	if ( $trim ) $data = substr($data, 8, strlen($data));
+	if ( $trim ) $data = substr($data, 7, strlen($data));
 	if ( strpos($data, 'error') ) $data = 'cURLitError';
 
 	curl_close($cu);
