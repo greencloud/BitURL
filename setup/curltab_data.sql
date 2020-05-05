@@ -5,8 +5,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `curltab_data` (
   `id` int(9) NOT NULL,
-  `url_id` varchar(8) NOT NULL,
-  `url_title` varchar(64) NOT NULL,
+  `url_id` varchar(32) NOT NULL,
+  `url_title` varchar(96) NOT NULL,
   `url_long` mediumtext NOT NULL,
   `url_short` varchar(64) NOT NULL,
   `url_hits` int(9) NOT NULL DEFAULT '0',
