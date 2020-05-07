@@ -1,4 +1,4 @@
-# C-URL
+# C-URL v-0.9.2
 C-URL is a simple, forever Free open source, URL shortener web application written in PHP.
 
 ## HOW TO SETUP C-URL?
